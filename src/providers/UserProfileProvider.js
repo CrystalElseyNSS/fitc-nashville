@@ -8,7 +8,7 @@ export const UserProfileContext = createContext();
 export function UserProfileProvider(props) {
   const functionsApiUrl = "https://us-central1-fitc-nashville.cloudfunctions.net";
   const apiUrl = "/api/userprofile"
-  const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+  const currentUser = JSON.parse(localStorage.getItem("userProfile"));
   const [allGardeners, setAllGardeners] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(currentUser != null);
   const [isFirebaseReady, setIsFirebaseReady] = useState(false);
@@ -23,7 +23,7 @@ export function UserProfileProvider(props) {
         addNewGardenerToFirestore({ ...gardener, firebaseUserId: createResponse.user.uid })
       )
       .then((savedUserProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
+        localStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
         setIsLoggedIn(true);
       });
   };
@@ -47,7 +47,7 @@ export function UserProfileProvider(props) {
       .signInWithEmailAndPassword(email, pw)
       .then((signInResponse) => getGardenerFromFirestore(signInResponse.user.uid))
       .then((userProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
         setIsLoggedIn(true);
       });
   };
@@ -69,7 +69,7 @@ export function UserProfileProvider(props) {
       .auth()
       .signOut()
       .then(() => {
-        sessionStorage.clear();
+        localStorage.clear();
         setIsLoggedIn(false);
       });
   };
@@ -102,7 +102,10 @@ export function UserProfileProvider(props) {
   };
   
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((u) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      user
+      ? localStorage.setItem('userProfile', JSON.stringify(user))
+      : localStorage.removeItem('userProfile')
       setIsFirebaseReady(true);
     });
   }, []);
