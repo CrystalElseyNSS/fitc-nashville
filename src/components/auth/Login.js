@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Form, FormGroup, Label, Input, Card,CardBody } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Card, CardBody } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 import './Auth.css';
@@ -22,47 +22,52 @@ export default function Login() {
   }
 
   return (
-    <div className="container pt-4">
-      <div className="row justify-content-center">
-        <Card className="col-sm-12 col-lg-6">
-          <CardBody>
-            <Form onSubmit={(e) => {
-              e.preventDefault()
-              loginSubmit()
+    <section className="authPage">
+      <div className="authContainer">
+        <div>
+          <Card className="authForm">
+            <CardBody>
+              <h3 className="authTitle">Login to FITC</h3>
+              <Form onSubmit={(e) => {
+                e.preventDefault()
+                loginSubmit()
               }}>
-              <fieldset>
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="text"
-                    onChange={(e) => {
-                      e.preventDefault()
-                      setEmail(e.target.value)
-                    }}
-                    onKeyDown={(e) => e.keyCode === 13 ? onKeyDown() : null}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    onKeyDown={(e) => e.keyCode === 13 ? onKeyDown() : null}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Button>Login</Button>
-                </FormGroup>
-                <em>
-                  Not registered? <Link to="register">Register</Link>
-                </em>
-              </fieldset>
-            </Form>
-          </CardBody>
-        </Card>
+                <fieldset>
+                  <FormGroup>
+                    <Label for="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="text"
+                      onChange={(e) => {
+                        e.preventDefault()
+                        setEmail(e.target.value)
+                      }}
+                      onKeyDown={(e) => e.keyCode === 13 ? onKeyDown() : null}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      onKeyDown={(e) => e.keyCode === 13 ? onKeyDown() : null}
+                    />
+                  </FormGroup>
+                  <FormGroup className="authBtnContainer">
+                    <Button className="authBtn">Login</Button>
+                  </FormGroup>
+                  <div className="authSwitchContainer">
+                    <em className="authSwitchLink">
+                      Not registered? <Link to="register">Create an Account</Link>
+                    </em>
+                  </div>
+                </fieldset>
+              </Form>
+            </CardBody>
+          </Card>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

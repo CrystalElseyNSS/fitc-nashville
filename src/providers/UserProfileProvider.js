@@ -6,26 +6,62 @@ import "firebase/auth";
 export const UserProfileContext = createContext();
 
 export function UserProfileProvider(props) {
-  const apiUrl = "https://us-central1-fitc-nashville.cloudfunctions.net";
+  const functionsApiUrl = "https://us-central1-fitc-nashville.cloudfunctions.net";
+  const apiUrl = "/api/userprofile"
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-  const [userProfiles, setUserProfiles] = useState([]);
+  const [allGardeners, setAllGardeners] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(currentUser != null);
   const [isFirebaseReady, setIsFirebaseReady] = useState(false);
-  
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((u) => {
-      setIsFirebaseReady(true);
-    });
-  }, []);
+
+  const getToken = () => firebase.auth().currentUser.getIdToken();
+
+  const register = (gardener, password) => {
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(gardener.email, password)
+      .then((createResponse) => 
+        addNewGardenerToFirestore({ ...gardener, firebaseUserId: createResponse.user.uid })
+      )
+      .then((savedUserProfile) => {
+        sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
+        setIsLoggedIn(true);
+      });
+  };
+
+  const addNewGardenerToFirestore = (gardener) => {
+    return getToken().then((token) =>
+      fetch(`${functionsApiUrl}/registerNewGardener`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(gardener),
+      }).then(resp => resp.json())
+    );
+  };
 
   const login = (email, pw) => {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, pw)
-      .then((signInResponse) => getUserProfile(signInResponse.user.uid))
+      .then((signInResponse) => getGardenerFromFirestore(signInResponse.user.uid))
       .then((userProfile) => {
         sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
+        setIsLoggedIn(true);
       });
+  };
+
+  const getGardenerFromFirestore = (firebaseUserId) => {
+    return getToken().then((token) =>
+      fetch(`${functionsApiUrl}/getGardenerById`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: firebaseUserId
+      }).then((resp) => resp.json())
+    );
   };
 
   const logout = () => {
@@ -38,70 +74,20 @@ export function UserProfileProvider(props) {
       });
   };
 
-  const register = (gardener, password) => {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(gardener.email, password)
-      .then((createResponse) => 
-        addNewGardener({ ...gardener, firebaseUserId: createResponse.user.uid })
-      )
-      .then((savedUserProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
-        setIsLoggedIn(true);
-      });
-  };
-
-  const getToken = () => firebase.auth().currentUser.getIdToken();
-
-  const getUserProfile = (firebaseUserId) => {
-    return getToken().then((token) =>
-      fetch(`${apiUrl}/${firebaseUserId}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((resp) => resp.json())
-    );
-  };
-
-  const getUserProfiles = () => {
+  const getAllGardeners = () => {
     getToken().then((token) =>
-      fetch(apiUrl, {
-        method: "GET",
+      fetch(`${functionsApiUrl}/getAllGardeners`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
         .then((resp) => resp.json())
-        .then(setUserProfiles)
+        .then(setAllGardeners)
     );
   };
 
-  const addNewGardener = (gardener) => {
-    return getToken().then((token) =>
-      fetch(`${apiUrl}/registerNewGardener`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(gardener),
-      }).then(resp => resp.json())
-    );
-  };
-
-  const getUserProfileById = (id) => {
-    return getToken().then((token) =>
-      fetch(`${apiUrl}/id/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((resp) => resp.json())
-    );
-  };
-
-  const editUserProfile = (userProfile) => {
+  const editGardenerProfile = (userProfile) => {
     return getToken().then((token) =>
       fetch(apiUrl + `/${userProfile.id}`, {
         method: "PUT",
@@ -111,9 +97,16 @@ export function UserProfileProvider(props) {
         },
         body: JSON.stringify(userProfile),
       })
-      .then(getUserProfiles)
+      .then(getAllGardeners)
     );
   };
+  
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((u) => {
+      setIsFirebaseReady(true);
+    });
+  }, []);
+
 
   return (
     <UserProfileContext.Provider
@@ -123,10 +116,9 @@ export function UserProfileProvider(props) {
         logout,
         register,
         getToken,
-        getUserProfileById,
-        getUserProfiles,
-        userProfiles,
-        editUserProfile,
+        getAllGardeners,
+        allGardeners,
+        editGardenerProfile,
         currentUser
       }}
     >

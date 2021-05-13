@@ -5,10 +5,10 @@ import { UserProfileContext } from "../../providers/UserProfileProvider";
 import "./UserProfile.css";
 
 export const UserProfileList = () => {
-  const { userProfiles, getUserProfiles } = useContext(UserProfileContext);
+  const { gardeners, getAllGardeners } = useContext(UserProfileContext);
 
   useEffect(() => {
-    getUserProfiles();
+    getAllGardeners();
     // eslint-disable-next-line
   }, []);
 
@@ -17,7 +17,7 @@ export const UserProfileList = () => {
   return (
     <>
         <div className="usersHeader">
-            <h3>Users</h3>
+            <h3>Gardeners</h3>
         </div>
       <section className="userProfileList">
         <ListGroup horizontal className="header--userList">
@@ -27,7 +27,7 @@ export const UserProfileList = () => {
           <h5 className="header--userInfo">Actions</h5>
         </ListGroup>
         <ListGroup>
-          {userProfiles.map((up) => (
+          {gardeners.map((up) => (
             <UserProfile key={up.id} userProfile={up} />
           ))}
         </ListGroup>

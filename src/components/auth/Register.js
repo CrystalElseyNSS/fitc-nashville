@@ -32,10 +32,10 @@ export default function Register() {
   };
 
   return (
-    <section className="registerPage">
+    <section className="authPage">
       <div className="authContainer">
         <div>
-          <Card className="registerForm">
+          <Card className="authForm">
             <CardBody>
               <h3 className="authTitle">Create an Account</h3>
               <Form onSubmit={registerClick}>

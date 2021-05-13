@@ -14,7 +14,7 @@
     width: 100%;
 }
 
-.registerPage {
+.authPage {
     align-items: center;
     background-image: url('../../assets/garden.JPG');
     background-repeat: no-repeat;
@@ -24,7 +24,7 @@
     height: 100vh;
 }
 
-.registerForm {
+.authForm {
     border: none !important;
     border-radius: 10px !important;
     min-width: 500px !important;
