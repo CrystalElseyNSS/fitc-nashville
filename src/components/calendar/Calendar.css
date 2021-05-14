@@ -1,7 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Poiret+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Poiret+One&display=swap");
 
 h1 {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+#calendarPage {
+  background-image: url("../../assets/garden.JPG");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  justify-content: space-evenly;
+  position: absolute;
+  padding-top: 10vh;
+  width: 100vw;
+}
+
+.eventForm {
+  height: 40vw;
+  width: 30vw;
+  min-height: 475px;
+  min-width: 365px !important;
+}
+
+.rbc-calendar {
+  height: 40vw;
+  width: 40vw;
+  min-width: 488px;
+  min-height: 488px;
+}
+
+.rbc-btn-group {
+  background-color: rgb(103, 139, 65, 0.8);
+}
+
+.rbc-month-header {
+  background-color: #c2c2be;
+}
+
+.rbc-day-bg {
+  background-color: rgb(194, 194, 190, 0.7);
+}
+
+.rbc-off-range-bg {
+  background-color: rgb(230, 230, 230);
+}
+
+.formTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10%;
+  padding-top: 3%;
+  text-align: center;
+  width: 100%;
+}
+
+.eventBtn {
+  background-color: #678b41 !important;
+  border: none !important;
+  float: right;
+  border-radius: 40px !important;
+  width: 45%;
+  margin-top: 4%;
+}
+
+textarea.form-control {
+  height: 8rem;
+}
+
+#viewCalBtn {
+  display: none;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 1563px) {
+  .rbc-toolbar {
+    justify-content: unset;
+  }
+  .rbc-toolbar-label {
+    font-size: 2rem;
+    text-align: end !important;
+  }
+}
+
+@media (max-width: 897px) {
+  #calendarPage {
+    display: unset;
+  }
+  .eventForm {
+    height: 54vh;
+    width: 55vw;
+    margin: auto;
+  }
 }

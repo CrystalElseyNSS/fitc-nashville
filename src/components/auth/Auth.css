@@ -1,15 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Poiret+One&display=swap');
+
 
 .authContainer {
     margin-left: 15%;
 }
 
 .authTitle {
-    font-family: 'Didact Gothic', sans-serif;
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 10%;
-    padding-top: 5%;
+    padding-top: 3%;
     text-align: center;
     width: 100%;
 }
@@ -41,8 +40,10 @@
 }
 
 .authBtn {
-    background-color: green !important;
+    background-color: #678b41 !important;
     border: none !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
     margin: 2.5% auto 0;
     width: 50%;
 }
@@ -52,4 +53,13 @@
     justify-content: center;
     padding-bottom: 5%;
     width: 100%;
+}
+
+.authSwitchLink {
+    font-size: 1.15rem;
+}
+
+.authSwitchLink a {
+    color: #678b41 !important;
+    font-weight: 900;
 }
