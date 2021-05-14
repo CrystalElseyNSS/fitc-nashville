@@ -27,7 +27,6 @@ export const UserProfile = ({ userProfile }) => {
   const currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
   const { getImgURL } = useContext(UploadImgContext)
   const numberAdmins = userProfiles.filter(up => up.userTypeId === 1 && up.isActivated === true).length
-  console.log(numberAdmins)
   
   const handleClick = () => {
     history.push(`/userprofiles/${userProfile.id}`);

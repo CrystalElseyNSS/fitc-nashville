@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { AddEvent } from "./AddEvent";
-
-const localizer = momentLocalizer(moment);
+import { EventContext } from "../../providers/CalendarProvider";
 
 export function CommunityCalendar() {
-  const [events, setEvents] = useState([]);
+  const localizer = momentLocalizer(moment);
 
+  const { allEvents, getAllEvents } = useContext(EventContext);
   useEffect(() => {
-    setEvents([
-      {
-        start: moment().toDate(),
-        end: moment().add(1, "days").toDate(),
-        description: "",
-        title: "Community Work Days",
-      },
-    ]);
+    getAllEvents();
   }, []);
 
   return (
@@ -28,9 +21,24 @@ export function CommunityCalendar() {
           localizer={localizer}
           defaultDate={new Date()}
           defaultView="month"
-          events={events}
+          events={allEvents}
+          startAccessor={(e) => moment(e.start).toDate()}
+          endAccessor={(e) => moment(e.end).toDate()}
         />
       </section>
+      <div>
+        {allEvents.map((e) => {
+          return (
+            <>
+              <div className="event" key={e.id}>
+                <p>{e.title}</p>
+                <p>{e.description}</p>
+                <p>{e.start}</p>
+              </div>
+            </>
+          );
+        })}
+      </div>
     </>
   );
 }

@@ -1,13 +1,12 @@
 import React, { useState, useContext, useRef } from "react";
 import { Button, Form, FormGroup, Input, Card, CardBody } from "reactstrap";
-import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.css";
+import { EventContext } from "../../providers/CalendarProvider";
 
 export function AddEvent() {
-  const history = useHistory();
-  //   const { addEvent } = useContext(EventContext);
+  const { addNewEvent } = useContext(EventContext);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [start, setStart] = useState(null);
@@ -15,7 +14,7 @@ export function AddEvent() {
   const startDate = useRef()
   const endDate = useRef()
 
-  const addNewEvent = (e) => {
+  const addEvent = (e) => {
     e.preventDefault();
     const event = {
       title: title,
@@ -23,15 +22,14 @@ export function AddEvent() {
       start: start,
       end: end,
     };
-    console.log(event)
-    // addEvent(event).then(() => history.push("/"));
+    addNewEvent(event)
   };
 
   return (
     <Card className="eventForm">
       <CardBody>
         <h3 className="formTitle">Add an Event</h3>
-        <Form onSubmit={addNewEvent}>
+        <Form onSubmit={addEvent}>
           <fieldset>
             <FormGroup>
               <Input
