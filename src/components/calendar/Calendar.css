@@ -20,17 +20,18 @@ h1 {
 }
 
 .eventForm {
-  height: 40vw;
+  height: fit-content;
   width: 30vw;
-  min-height: 475px;
-  min-width: 365px !important;
+  min-width: 390px !important;
+}
+
+.eventForm .card-body {
+  background-color: white !important;
 }
 
 .rbc-calendar {
   height: 40vw;
   width: 40vw;
-  min-width: 488px;
-  min-height: 488px;
 }
 
 .rbc-btn-group {
@@ -79,7 +80,11 @@ textarea.form-control {
   font-size: 1.5rem;
 }
 
-@media (max-width: 1563px) {
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+/* @media (max-width: 1563px) {
   .rbc-toolbar {
     justify-content: unset;
   }
@@ -87,9 +92,9 @@ textarea.form-control {
     font-size: 2rem;
     text-align: end !important;
   }
-}
+} */
 
-@media (max-width: 897px) {
+/* @media (max-width: 897px) {
   #calendarPage {
     display: unset;
   }
@@ -98,4 +103,4 @@ textarea.form-control {
     width: 55vw;
     margin: auto;
   }
-}
+} */

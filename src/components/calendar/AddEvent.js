@@ -1,16 +1,19 @@
 import React, { useState, useContext, useRef } from "react";
 import { Button, Form, FormGroup, Input, Card, CardBody } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
-import { UserProfileContext } from "../../providers/UserProfileProvider";
+import { useHistory } from "react-router-dom";
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.css";
 
 export function AddEvent() {
   const history = useHistory();
-//   const { addEvent } = useContext(EventContext);
+  //   const { addEvent } = useContext(EventContext);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-  const [start, setStart] = useState();
+  const [start, setStart] = useState(null);
   const [end, setEnd] = useState();
+  const startDate = useRef()
+  const endDate = useRef()
 
   const addNewEvent = (e) => {
     e.preventDefault();
@@ -20,6 +23,7 @@ export function AddEvent() {
       start: start,
       end: end,
     };
+    console.log(event)
     // addEvent(event).then(() => history.push("/"));
   };
 
@@ -46,7 +50,7 @@ export function AddEvent() {
                 placeholder="Event description - What details do people need to know (ie. what to bring, are guests welcome, etc.)?"
               />
             </FormGroup>
-            <FormGroup>
+            {/* <FormGroup>
               <Input
                 id="start"
                 type="text"
@@ -54,15 +58,44 @@ export function AddEvent() {
                 required
                 placeholder="Start time"
               />
-            </FormGroup>
+            </FormGroup> */}
+
             <FormGroup>
+              <div required ref={startDate}>
+                {
+                  <DatePicker
+                    placeholderText="Start time"
+                    showTimeSelect
+                    selected={start}
+                    onChange={(dateEntered) => setStart(dateEntered)}
+                    className="form-control"
+                  />
+                }
+              </div>
+            </FormGroup>
+
+            <FormGroup>
+              <div required ref={endDate}>
+                {
+                  <DatePicker
+                    placeholderText="End time"
+                    showTimeSelect
+                    selected={end}
+                    className="form-control"
+                    onChange={(dateEntered) => setEnd(dateEntered)}
+                  />
+                }
+              </div>
+            </FormGroup>
+
+            {/* <FormGroup>
               <Input
                 id="end"
                 type="text"
                 placeholder="End time"
                 onChange={(e) => setEnd(e.target.value)}
               />
-            </FormGroup>
+            </FormGroup> */}
 
             <FormGroup className="eventBtnContainer">
               <Button className="eventBtn">Add to Calendar</Button>
