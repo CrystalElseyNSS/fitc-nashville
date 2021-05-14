@@ -1,5 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200&display=swap');
+
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
 body, main {
     margin: 0
+}
+
+label {
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 .app-spinner {
@@ -8,6 +20,12 @@ body, main {
   left: 50%;
   margin-top: -16px;
   margin-left: -16px;
+}
+
+h1 {
+  padding-top: 36px !important;
+  text-align: center;
+  width: 100%;
 }
 
 p {

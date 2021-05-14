@@ -6,9 +6,10 @@ import Register from "../components/auth/Register";
 import { UserProfileList } from "../components/userProfiles/UserProfileList";
 import { UserProfileDetails } from "../components/userProfiles/UserProfileDetails";
 import '../components/app/App.css'
-import Calendar from "../components/calendar/Calendar";
+import { CommunityCalendar } from "../components/calendar/Calendar";
+import { AddBulletin } from "../components/bulletin/AddBulletin";
 
-export default function ApplicationViews() {
+export function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
 
   return (
@@ -16,7 +17,11 @@ export default function ApplicationViews() {
       <Switch>
 
         <Route exact path="/">
-          {isLoggedIn ? <Calendar /> : <Redirect to="/login" />}
+          {isLoggedIn ? <CommunityCalendar /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/addBulletin">
+          {isLoggedIn ? <AddBulletin /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/userProfiles/:id" exact>
