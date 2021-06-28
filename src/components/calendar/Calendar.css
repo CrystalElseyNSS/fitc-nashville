@@ -1,12 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Poiret+One&display=swap");
 
-h1 {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
 #calendarPage {
+  background-color: #2A580F;
   background-image: url("../../assets/garden.JPG");
   background-repeat: no-repeat;
   background-size: cover;
@@ -14,24 +9,42 @@ h1 {
   flex-wrap: wrap;
   height: 100vh;
   justify-content: space-evenly;
-  position: absolute;
-  padding-top: 10vh;
+  align-items: center;
   width: 100vw;
 }
 
-.eventForm {
-  height: fit-content;
-  width: 30vw;
-  min-width: 390px !important;
+/* --------------- Calendar Styling --------------- */
+
+.calendarContainer {
+  position: relative;
 }
 
-.eventForm .card-body {
-  background-color: white !important;
+#addEventBtn {
+  width: 30px;
+  height: 30px;
+  background-color: #2A580F;
+  border-radius: 50%;
+  position: absolute;
+  right: -5%;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .rbc-calendar {
-  height: 40vw;
-  width: 40vw;
+  height: 80vh;
+  width: 80vw;
+}
+
+.rbc-toolbar {
+  flex-wrap: nowrap;
+  font-size: clamp(10px, 1vw, 18px);
+  justify-content: unset;
+}
+
+.rbc-toolbar-label {
+  font-size: clamp(18px, 1.5vw, 24px);
 }
 
 .rbc-btn-group {
@@ -50,6 +63,36 @@ h1 {
   background-color: rgb(230, 230, 230);
 }
 
+.rbc-event {
+  background-color: #e0cc12;
+  color: black;
+}
+
+.rbc-event.rbc-selected {
+  background-color: rgb(103, 139, 65, 0.8);
+  border: none !important;
+}
+
+.rbc-event.rbc-selected:focus {
+  outline: none;
+}
+
+/* --------------- Event Form Styling --------------- */
+
+.modal-dialog {
+  display: flex;
+  margin-top: 0;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    margin: 0 auto !important;
+  }
+}
+
 .formTitle {
   font-size: 3rem;
   font-weight: 700;
@@ -59,12 +102,13 @@ h1 {
   width: 100%;
 }
 
-.eventBtn {
+.addEventBtn {
   background-color: #678b41 !important;
   border: none !important;
   float: right;
   border-radius: 40px !important;
   width: 45%;
+  margin-bottom: 3%;
   margin-top: 4%;
 }
 
@@ -72,35 +116,6 @@ textarea.form-control {
   height: 8rem;
 }
 
-#viewCalBtn {
-  display: none;
-}
-
-.rbc-toolbar-label {
-  font-size: 1.5rem;
-}
-
 .react-datepicker-wrapper {
   width: 100%;
 }
-
-/* @media (max-width: 1563px) {
-  .rbc-toolbar {
-    justify-content: unset;
-  }
-  .rbc-toolbar-label {
-    font-size: 2rem;
-    text-align: end !important;
-  }
-} */
-
-/* @media (max-width: 897px) {
-  #calendarPage {
-    display: unset;
-  }
-  .eventForm {
-    height: 54vh;
-    width: 55vw;
-    margin: auto;
-  }
-} */

@@ -1,5 +1,4 @@
 import React, { useState, createContext } from "react";
-import { Spinner } from "reactstrap";
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -9,6 +8,7 @@ export function EventProvider(props) {
   const functionsApiUrl =
     "https://us-central1-fitc-nashville.cloudfunctions.net";
   const [allEvents, setAllEvents] = useState([]);
+  const [clickedEvent, setClickedEvent] = useState({})
   const getToken = () => firebase.auth().currentUser.getIdToken();
 
   const addNewEvent = (gardener) => {
@@ -37,12 +37,27 @@ export function EventProvider(props) {
     );
   };
 
+  const getEventInfo = (id) => {
+    getToken().then((token) =>
+      fetch(`${functionsApiUrl}/getEventInfo?id=${id}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then(setClickedEvent)
+    );
+  };
+
   return (
     <EventContext.Provider
       value={{
         addNewEvent,
         getAllEvents,
         allEvents,
+        getEventInfo,
+        clickedEvent
       }}
     >
       {props.children}

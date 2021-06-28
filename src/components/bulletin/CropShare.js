@@ -1,10 +1,10 @@
 import React from "react";
 import '../app/App.css';
 
-export function AddBulletin() {
+export function CropShare() {
   return (
     <>
-      <h1>Add a Community Bulletin here...</h1>
+      <h1>Post Crop Share Announcements here...</h1>
     </>
   );
 }

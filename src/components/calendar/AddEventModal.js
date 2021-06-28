@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.css";
 import { EventContext } from "../../providers/CalendarProvider";
 
-export function AddEvent() {
+export function AddEventModal({ toggle }) {
   const { addNewEvent } = useContext(EventContext);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -23,6 +23,7 @@ export function AddEvent() {
       end: end,
     };
     addNewEvent(event)
+    .then(toggle)
   };
 
   return (
@@ -45,6 +46,7 @@ export function AddEvent() {
                 id="description"
                 type="textarea"
                 onChange={(e) => setDescription(e.target.value)}
+                required
                 placeholder="Event description - What details do people need to know (ie. what to bring, are guests welcome, etc.)?"
               />
             </FormGroup>
@@ -67,6 +69,7 @@ export function AddEvent() {
                     selected={start}
                     onChange={(dateEntered) => setStart(dateEntered)}
                     className="form-control"
+                    required
                   />
                 }
               </div>
@@ -81,6 +84,7 @@ export function AddEvent() {
                     selected={end}
                     className="form-control"
                     onChange={(dateEntered) => setEnd(dateEntered)}
+                    required
                   />
                 }
               </div>
@@ -95,11 +99,8 @@ export function AddEvent() {
               />
             </FormGroup> */}
 
-            <FormGroup className="eventBtnContainer">
-              <Button className="eventBtn">Add to Calendar</Button>
-            </FormGroup>
-            <FormGroup>
-              <Button id="viewCalBtn">View Calendar</Button>
+            <FormGroup className="addEventBtnContainer">
+              <Button className="addEventBtn">Add to Calendar</Button>
             </FormGroup>
           </fieldset>
         </Form>

@@ -1,5 +1,4 @@
 import { stack as Menu } from 'react-burger-menu';
-import { Link } from "react-router-dom";
 import './Nav.css';
 
 export function Nav() {
@@ -8,7 +7,8 @@ export function Nav() {
         <>
             <Menu>
                 <a id="nav_calendar" href="/">Calendar</a>
-                <a id="nav_addBulletin" href="/addBulletin">Bulletin Board</a>
+                <a id="nav_careRequests" href="/carerequests">Care Requests</a>
+                <a id="nav_cropShare" href="/cropshare">Crop Share</a>
             </Menu>
         </>
     )

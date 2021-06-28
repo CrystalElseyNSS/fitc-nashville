@@ -6,8 +6,9 @@ import Register from "../components/auth/Register";
 import { UserProfileList } from "../components/userProfiles/UserProfileList";
 import { UserProfileDetails } from "../components/userProfiles/UserProfileDetails";
 import '../components/app/App.css'
-import { CommunityCalendar } from "../components/calendar/Calendar";
-import { AddBulletin } from "../components/bulletin/AddBulletin";
+import { CommunityCalendar } from "../components/calendar/CommunityCalendar";
+import { CropShare } from "../components/bulletin/CropShare";
+import { CareRequests } from "../components/bulletin/CareRequests";
 
 export function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -20,8 +21,12 @@ export function ApplicationViews() {
           {isLoggedIn ? <CommunityCalendar /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/addBulletin">
-          {isLoggedIn ? <AddBulletin /> : <Redirect to="/login" />}
+        <Route exact path="/cropshare">
+          {isLoggedIn ? <CropShare /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/carerequests">
+          {isLoggedIn ? <CareRequests /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/userProfiles/:id" exact>
